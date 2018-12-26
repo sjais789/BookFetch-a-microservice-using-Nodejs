@@ -88,7 +88,10 @@ var basicplugin = function(opt) {
 
         var books = this.make('book');
 
-
+        books.remove$(args.id,function(err)
+        {
+            done(err,null);
+        })
     });
     }
 );
