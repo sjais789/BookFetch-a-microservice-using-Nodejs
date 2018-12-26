@@ -84,7 +84,13 @@ var basicplugin = function(opt) {
     // delete a  book by id
 
 
-    seneca.add()
-}
+    seneca.add({area: 'book', action: 'remove'}, function (args, done) {
+
+        var books = this.make('book');
+
+
+    });
+    }
+);
 
 module.exports = app;
