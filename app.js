@@ -93,6 +93,15 @@ var basicplugin = function(opt) {
             done(err,null);
         })
     });
+
+
+    // editing the book data
+
+    seneca.edit()
+
+
+
+
     }
 );
 
