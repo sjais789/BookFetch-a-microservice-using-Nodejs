@@ -45,18 +45,46 @@ app.use(function(err, req, res, next) {
 var seneca = require('seneca');
 
 
+var basicplugin = function(opt) {
+
+    var seneca = this;
+
 // all the book
-seneca.add({area:'book',action :'fetch'},function(args,done) {
-  var books =this.make('books');
-  products.list$({}, done);    //use to retrieve all data from db
-});
+    seneca.add({area: 'book', action: 'fetch'}, function (args, done) {
+        var books = this.make('books');
+        books.list$({}, done);    //use to retrieve all data from db
+    });
 
 
 // book by category
-seneca.add({area:'book',action :'fetch',criteria :'byCategory'},function(args,done) {
-  var books =this.make('books');
-  products.list$({category: args.category}, done);    //use to retrieve book by category from db
-});
+    seneca.add({area: 'book', action: 'fetch', criteria: 'byCategory'}, function (args, done) {
+        var books = this.make('books');
+        books.list$({category: args.category}, done);    //use to retrieve book by category from db
+    });
 
+// book by ID
+    seneca.add({area: 'book', action: 'fetch', criteria: 'byId'}, function (args, done) {
+        var books = this.make('books');
+        books.load$( args.id, done);    //use to retrieve book by category from db
+    });  //  In mongo db we have id in the form of hash and mysql we have integer
+
+// add books data to the db
+    seneca.add({area:'book',action:'add'},function(args,done)
+    {
+        var books = this.make('books');
+        books.name =args.name;
+        books.description= args.description;
+        books.author= args.author;
+        books.category= args.category;
+        books.save$(function (err,book) {
+            done(err,books.data$(false));
+        });
+
+    })
+    // delete a  book by id
+
+
+    seneca.add()
+}
 
 module.exports = app;
