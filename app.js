@@ -21,13 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({des:'./uploads'}));
 
 
-app.use(session({
 
-  secret:
-  save:
-
-
-}))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -46,5 +40,23 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+var seneca = require('seneca');
+
+
+// all the book
+seneca.add({area:'book',action :'fetch'},function(args,done) {
+  var books =this.make('books');
+  products.list$({}, done);    //use to retrieve all data from db
+});
+
+
+// book by category
+seneca.add({area:'book',action :'fetch',criteria :'byCategory'},function(args,done) {
+  var books =this.make('books');
+  products.list$({category: args.category}, done);    //use to retrieve book by category from db
+});
+
 
 module.exports = app;
